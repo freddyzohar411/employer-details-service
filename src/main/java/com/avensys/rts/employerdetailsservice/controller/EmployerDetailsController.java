@@ -9,15 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.avensys.rts.employerdetailsservice.constant.MessageConstants;
 import com.avensys.rts.employerdetailsservice.payloadnewrequest.EmployerDetailsRequestDTO;
@@ -30,6 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/api/employer-details")
 public class EmployerDetailsController {
 
 	private final Logger log = LoggerFactory.getLogger(EmployerDetailsController.class);
@@ -44,7 +37,7 @@ public class EmployerDetailsController {
 		this.messageSource = messageSource;
 	}
 
-	@PostMapping("/employer-details")
+	@PostMapping("")
 	public ResponseEntity<Object> createEmployerDetails(@Valid @RequestBody EmployerDetailsRequestDTO employerDetailsRequestDTO,
 			@RequestHeader(name = "Authorization") String token) {
 		log.info("Create Employer Details : Controller ");
@@ -56,7 +49,7 @@ public class EmployerDetailsController {
 				messageSource.getMessage(MessageConstants.MESSAGE_CREATED, null, LocaleContextHolder.getLocale()));
 	}
 
-	@GetMapping("/employer-details/entity/{entityType}/{entityId}")
+	@GetMapping("/entity/{entityType}/{entityId}")
 	public ResponseEntity<Object> getEmployerDetailsByEntityTypeAndEntityId(@PathVariable String entityType,
 			@PathVariable Integer entityId) {
 		log.info("Get Employer Details by entity type and entity id : Controller ");
@@ -65,7 +58,7 @@ public class EmployerDetailsController {
 				messageSource.getMessage(MessageConstants.MESSAGE_SUCCESS, null, LocaleContextHolder.getLocale()));
 	}
 
-	@DeleteMapping("/employer-details/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> deleteEmployerDetails(@PathVariable Integer id) {
 		log.info("Delete Employer Details : Controller ");
 		employerDetailsServiceImpl.deleteEmployerDetails(id);
@@ -73,7 +66,7 @@ public class EmployerDetailsController {
 				messageSource.getMessage(MessageConstants.MESSAGE_SUCCESS, null, LocaleContextHolder.getLocale()));
 	}
 
-	@PutMapping("/employer-details/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateEmployerDetails(@PathVariable Integer id,
 			@Valid @RequestBody EmployerDetailsRequestDTO employerDetailsRequestDTO,
 			@RequestHeader(name = "Authorization") String token) {
@@ -92,7 +85,7 @@ public class EmployerDetailsController {
 	 * @param entityId
 	 * @return
 	 */
-	@DeleteMapping("/employer-details/entity/{entityType}/{entityId}")
+	@DeleteMapping("/entity/{entityType}/{entityId}")
 	public ResponseEntity<Object> deleteEmployerDetailsByEntityTypeAndEntityId(@PathVariable String entityType,
 			@PathVariable Integer entityId) {
 		log.info("Delete Employer Details by entity type and entity id : Controller ");
