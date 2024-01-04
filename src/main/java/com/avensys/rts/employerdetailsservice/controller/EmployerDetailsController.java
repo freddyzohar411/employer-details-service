@@ -37,7 +37,7 @@ public class EmployerDetailsController {
 		this.messageSource = messageSource;
 	}
 
-	@PostMapping("")
+	@PostMapping("/add")
 	public ResponseEntity<Object> createEmployerDetails(@Valid @RequestBody EmployerDetailsRequestDTO employerDetailsRequestDTO,
 			@RequestHeader(name = "Authorization") String token) {
 		log.info("Create Employer Details : Controller ");
